@@ -2,7 +2,51 @@
     <head>
         <title>Get Domain</title>
     </head>
-    <body>
-        
+    <style type="text/css">
+    	th{
+    		background-color: grey;
+    	}
+    	table, td,th{
+    		border: 0.5px solid lightgrey;
+    		border-collapse: collapse;
+    		padding: 10px;
+    		}
+    </style>
+    <body style="text-align: center;">
+    	<h1>DomComp</h1>
+    	<form  method="post" action="{% url 'home' %}" style="border: 1px solid black;border-radius: 10px; text-align: center;display: inline-block;padding: 20px;margin-top: 30px;">{% csrf_token %}
+    	<p>Search for a Domain</p>
+    	<input type="" name="domain" style="margin-bottom: 15px;">
+ <br>   	<button type="submit">Search</button>
+    </form>
+        {% if error %}
+        	<h3>Invalid Format of Domain</h3>
+        {% elif res1 %}
+        <div>
+        	<h3>Domain: {{res1.domain}}</h3>
+        	<h3>Available: {{res1.available}}</h3>
+        	{% if res1.available is True %}
+        	<h3>Price: {{res1.price}}</h3>
+        	<h3>Currency: INR</h3>
+        	{% endif %}
+        </div>
+        {% else %}
+        <table width="60%" style="margin-left: 20%;">
+        	<tr>
+        		<th></th>
+        		<th>GoDaddy</th>
+        		<th>Comming Soon</th>
+        		<th>Coming Soon</th>
+        	</tr>
+        {% for row in res %}
+        <tr>
+        <td style="text-align: center;">.{{ row.name }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    	</tr>
+        {% endfor %}
+    	</table>
+ 	{% endif %}       
     </body>
 </html>
